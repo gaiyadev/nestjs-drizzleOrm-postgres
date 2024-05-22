@@ -26,7 +26,7 @@ export type DrizzleModuleOptions = {
    */
   synchronize?: boolean;
   /**
-   * Sequelize connection string
+   * drizzle connection string
    */
   uri?: string;
 } & Partial<any>; //to be drizzle option

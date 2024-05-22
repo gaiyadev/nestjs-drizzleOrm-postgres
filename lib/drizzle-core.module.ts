@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { defer, lastValueFrom } from 'rxjs';
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import {
   generateString,
   getConnectionToken,
@@ -23,6 +22,8 @@ import {
     DRIZZLE_MODULE_ID, DRIZZLE_MODULE_OPTIONS,
   DEFAULT_CONNECTION_NAME,
 } from './drizzle.constant';
+import { drizzle } from 'drizzle-orm/postgres-js';
+
 
 @Global()
 @Module({})
@@ -53,14 +54,14 @@ export class DrizzleCoreModule implements OnApplicationShutdown {
   static forRootAsync(options: DrizzleModuleAsyncOptions): DynamicModule {
     const connectionProvider = {
       provide: getConnectionToken(options as DrizzleModuleOptions) as string,
-      useFactory: async (sequelizeOptions: DrizzleModuleOptions) => {
+      useFactory: async (drizzleOptions: DrizzleModuleOptions) => {
         if (options.name) {
           return await this.createConnectionFactory({
-            ...sequelizeOptions,
+            ...drizzleOptions,
             name: options.name,
           });
         }
-        return await this.createConnectionFactory(sequelizeOptions);
+        return await this.createConnectionFactory(drizzleOptions);
       },
       inject: [DRIZZLE_MODULE_OPTIONS],
     };
@@ -129,29 +130,29 @@ export class DrizzleCoreModule implements OnApplicationShutdown {
 
   private static async createConnectionFactory(
     options: DrizzleModuleOptions,
-  ): Promise<Sequelize> {
+  ): Promise<unknown> {
     return lastValueFrom(
       defer(async () => {
-        const sequelize = options?.uri
-          ? new Sequelize(options.uri, options)
-          : new Sequelize(options);
+        const drizzle1 = options?.uri
+          ? drizzle(options.uri)
+          :  drizzle(options);
 
         if (!options.autoLoadModels) {
-          return sequelize;
+          return drizzle1;
         }
 
         const connectionToken = options.name || DEFAULT_CONNECTION_NAME;
         const models = EntitiesMetadataStorage.getEntitiesByConnection(
           connectionToken,
         );
-        sequelize.addModels(models as Sequelize);
+        drizzle1.with(models as any);
 
-        await sequelize.authenticate();
+        await drizzle1;
 
         if (typeof options.synchronize === 'undefined' || options.synchronize) {
-          await sequelize.sync(options.sync);
+          await drizzle1.with(options.sync);
         }
-        return sequelize;
+        return drizzle1;
       }).pipe(handleRetry(options.retryAttempts, options.retryDelay)),
     );
   }

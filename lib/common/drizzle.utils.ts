@@ -1,12 +1,13 @@
 import { Logger, Type } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { delay, retryWhen, scan } from 'rxjs/operators';
-import { Sequelize } from 'sequelize-typescript';
 import { v4 as uuid } from 'uuid';
 import { CircularDependencyException } from '../exceptions/circular-dependency.exception';
 import {  DrizzleModuleOptions} from '../interfaces';
 import { DEFAULT_CONNECTION_NAME } from '../drizzle.constant';
-import { DrizzleConfig} from 'drizzle-orm'
+import { DrizzleConfig } from 'drizzle-orm'
+import { drizzle } from 'drizzle-orm/postgres-js';
+
 const logger = new Logger('DrizzleModule');
 
 /**
@@ -36,11 +37,11 @@ export function getConnectionToken(
   connection: DrizzleModuleOptions | string = DEFAULT_CONNECTION_NAME,
 ): string | Function | Type<DrizzleConfig> {
   return DEFAULT_CONNECTION_NAME === connection
-    ? Sequelize
+    ? drizzle
     : 'string' === typeof connection
     ? `${connection}Connection`
     : DEFAULT_CONNECTION_NAME === connection.name || !connection.name
-    ? Sequelize
+    ? drizzle
     : `${connection.name}Connection`;
 }
 
