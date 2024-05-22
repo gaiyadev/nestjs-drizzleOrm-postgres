@@ -24,39 +24,14 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[nestjs-drizzleOrm-postgres](https://github.com/nestjs/nest) Postgres DrizzleORM module for Nest framework (node.js).
 
 ## Installation
 
 ```bash
-$ npm install
+$ npm i drizzle-orm postgres nestjs-drizzleOrm-postgres
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 
 ## Support
 
