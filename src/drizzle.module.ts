@@ -1,15 +1,15 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { DrizzleModuleOptions } from './drizzle.interfaces';
 import { DEFAULT_CONNECTION_NAME } from './drizzle.constants';
-import { createConnection, getConnectionToken, getModelToken } from './drizzle.utils';
+import { createConnection, getModelToken, getConnectionToken } from './drizzle.utils';
 
 @Global()
 @Module({})
 export class DrizzleModule {
-  static forRoot(options: DrizzleModuleOptions): DynamicModule {
+  static forRoot(options: DrizzleModuleOptions, schema: any): DynamicModule {
     const connectionProvider = {
       provide: getConnectionToken(options.name),
-      useValue: createConnection(options.config),
+      useValue: createConnection(options.config, schema),
     };
 
     return {
@@ -19,10 +19,10 @@ export class DrizzleModule {
     };
   }
 
-  static forFeature(entities: Function[], connection: string = DEFAULT_CONNECTION_NAME): DynamicModule {
-    const providers = entities.map(entity => ({
-      provide: getModelToken(entity, connection),
-      useFactory: (connection) => connection.getRepository(entity), // Adjust this based on Drizzle API
+  static forFeature(tables: any[], connection: string = DEFAULT_CONNECTION_NAME): DynamicModule {
+    const providers = tables.map(table => ({
+      provide: getModelToken(table, connection),
+      useFactory: (db: any) => db.getRepository(table),
       inject: [getConnectionToken(connection)],
     }));
 
