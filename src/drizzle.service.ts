@@ -9,9 +9,9 @@ export class DrizzleService {
     try {
       const client = postgres(options.postgres.url, options.postgres.config);
       return drizzle(client, options?.config);
-    } catch (error) {
-      console.error('Error connecting to PostgreSQL:', error);
-      throw error; // Rethrow the error for handling in the calling code
+    } catch (err) {
+      console.error('Error connecting to PostgreSQL:', err);
+      throw err; // Rethrow the error for handling in the calling code
     }
   }
 }

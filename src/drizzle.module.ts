@@ -9,7 +9,7 @@ import { DrizzleService } from './drizzle.service';
 import { DrizzleConfigOptions } from './drizzle.interface';
 
 @Global()
-@Module({})
+// @Module({})
 export class DrizzleModule extends ConfigurableModuleClass {
   static forRoot(options: typeof OPTIONS_TYPE): DynamicModule {
     const { providers = [], exports = [], ...props } = super.register(options);
