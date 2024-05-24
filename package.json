@@ -1,6 +1,6 @@
 {
   "name": "nestjs-drizzle-postgres",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Postgres DrizzleORM module for Nest framework (node.js)",
   "author": "Gaiya M. Obed",
   "license": "MIT",
