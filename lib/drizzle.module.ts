@@ -31,7 +31,11 @@ export class DrizzleModule extends ConfigurableModuleClass {
   }
 
   static forRootAsync(options: typeof ASYNC_OPTIONS_TYPE): DynamicModule {
-    const { providers = [], exports = [], ...props } = super.registerAsync(options);
+    const {
+      providers = [],
+      exports = [],
+      ...props
+    } = super.registerAsync(options);
     return {
       ...props,
       providers: [
@@ -41,7 +45,7 @@ export class DrizzleModule extends ConfigurableModuleClass {
           provide: options?.tag || 'default',
           useFactory: async (
             drizzleService: DrizzleService,
-            config: DrizzleConfigOptions
+            config: DrizzleConfigOptions,
           ) => {
             return await drizzleService.getDrizzle(config);
           },
@@ -52,8 +56,8 @@ export class DrizzleModule extends ConfigurableModuleClass {
     };
   }
 
-  static forFeature(tables: any[], connection: string = 'default'): DynamicModule {
-    const providers = tables.map(table => ({
+  static forFeature(tables: any[], connection = 'default'): DynamicModule {
+    const providers = tables.map((table) => ({
       provide: `${connection}_${table.name}Repository`,
       useFactory: (db) => db.getRepository(table),
       inject: [connection],

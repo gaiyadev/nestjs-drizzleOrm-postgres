@@ -29,7 +29,7 @@
 ## Installation
 
 ```bash
-$ npm i nestjs-drizzl-postgres
+$ npm i nestjs-drizzle-postgres
 ```
 
 ## Support

@@ -14,6 +14,6 @@ export const {
     (definition, extras) => ({
       ...definition,
       tag: extras.tag,
-    })
+    }),
   )
   .build();
