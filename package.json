@@ -1,6 +1,6 @@
 {
   "name": "nestjs-drizzle-postgres",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Postgres DrizzleORM module for Nest framework (node.js)",
   "author": "Gaiya M. Obed",
   "license": "MIT",
@@ -18,10 +18,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "publish":"npm publish",
-    "patch":"npm version patch",
-    "minor":"npm version minor",
-    "major":"npm version major "
+    "publish": "npm publish",
+    "patch": "npm version patch",
+    "minor": "npm version minor",
+    "major": "npm version major "
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
