@@ -1,6 +1,6 @@
 {
   "name": "nestjs-drizzle-orm-postgres",
-  "version": "1.2.2",
+  "version": "1.0.0",
   "description": "Postgres Drizzle ORM module for Nestjs framework (node.js)",
   "author": "Gaiya M. Obed",
   "main": "dist/index.js",
