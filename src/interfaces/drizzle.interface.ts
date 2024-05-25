@@ -1,6 +1,6 @@
 import { DrizzleConfig } from 'drizzle-orm';
 import { ClientConfig, PoolConfig } from 'pg';
-import { connectionEnum } from '../enums/connection-enum';
+import { connectionEnum } from '../enums/connection.enum';
 
 export interface DrizzlePostgresConfig {
   postgres: {

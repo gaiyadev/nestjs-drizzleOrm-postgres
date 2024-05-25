@@ -5,27 +5,28 @@ import {
   MODULE_OPTIONS_TOKEN,
   OPTIONS_TYPE,
 } from './drizzle-metadata/drizzle.definition';
-import { DrizzlePostgresService } from './drizzle.service';
+import { DrizzleProvider } from './drizzle.provider';
 import { DrizzlePostgresConfig } from './interfaces/drizzle.interface';
+import { TagEnum } from './enums/tag.enum';
 
 @Global()
-export class DrizzlePostgresModule extends ConfigurableModuleClass {
+export class DrizzleModule extends ConfigurableModuleClass {
   static forRoot(options: typeof OPTIONS_TYPE): DynamicModule {
     const { providers = [], exports = [], ...props } = super.register(options);
     return {
       ...props,
       providers: [
         ...providers,
-        DrizzlePostgresService,
+        DrizzleProvider,
         {
-          provide: options?.tag || 'default',
-          useFactory: async (drizzleService: DrizzlePostgresService) => {
+          provide: options?.tag || TagEnum.default,
+          useFactory: async (drizzleService: DrizzleProvider) => {
             return await drizzleService.getDrizzle(options);
           },
-          inject: [DrizzlePostgresService],
+          inject: [DrizzleProvider],
         },
       ],
-      exports: [...exports, options?.tag || 'default'],
+      exports: [...exports, options?.tag || TagEnum.default],
     };
   }
   static forRootAsync(options: typeof ASYNC_OPTIONS_TYPE): DynamicModule {
@@ -38,19 +39,19 @@ export class DrizzlePostgresModule extends ConfigurableModuleClass {
       ...props,
       providers: [
         ...providers,
-        DrizzlePostgresService,
+        DrizzleProvider,
         {
-          provide: options?.tag || 'default',
+          provide: options?.tag || TagEnum.default,
           useFactory: async (
-            drizzleService: DrizzlePostgresService,
+            drizzleService: DrizzleProvider,
             config: DrizzlePostgresConfig,
           ) => {
             return await drizzleService.getDrizzle(config);
           },
-          inject: [DrizzlePostgresService, MODULE_OPTIONS_TOKEN],
+          inject: [DrizzleProvider, MODULE_OPTIONS_TOKEN],
         },
       ],
-      exports: [...exports, options?.tag || 'default'],
+      exports: [...exports, options?.tag || TagEnum.default],
     };
   }
 }

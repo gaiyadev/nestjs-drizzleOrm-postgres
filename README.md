@@ -35,9 +35,20 @@ $ npm i nestjs-drizzle-postgres
 ## Usage
 
 ```code
-   DrizzlePostgresModule.register({
+   DrizzleModule.forRoot({
       tag: 'DB_DEV',
-      pg: {
+      postgres: {
+        connection: 'client',
+        config: {
+          connectionString: `postgresql://${process.env['LOCAL_DATABASE_USER']}:${process.env['LOCAL_DATABASE_PASSWORD']}@localhost:5432/drizzle_orm`,
+        },
+      },
+      config: { schema: { ...schema } },
+    }),
+    // or
+    DrizzleModule.forRootAsync({
+      tag: 'DB_DEV',
+      postgres: {
         connection: 'client',
         config: {
           connectionString: `postgresql://${process.env['LOCAL_DATABASE_USER']}:${process.env['LOCAL_DATABASE_PASSWORD']}@localhost:5432/drizzle_orm`,

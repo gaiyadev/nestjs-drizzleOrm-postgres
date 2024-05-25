@@ -1,5 +1,6 @@
 import { ConfigurableModuleBuilder } from '@nestjs/common';
 import { DrizzlePostgresConfig } from '../interfaces/drizzle.interface';
+import { TagEnum } from '../enums/tag.enum';
 
 export const {
   ConfigurableModuleClass,
@@ -9,7 +10,7 @@ export const {
 } = new ConfigurableModuleBuilder<DrizzlePostgresConfig>()
   .setExtras(
     {
-      tag: 'default',
+      tag: TagEnum.default,
     },
     (definition, extras) => ({
       ...definition,
