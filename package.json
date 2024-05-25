@@ -1,7 +1,7 @@
 {
-  "name": "nestjs-drizzle-postgres",
-  "version": "1.2.0",
-  "description": "Postgres drizzle orm module for Nest framework (node.js)",
+  "name": "nestjs-drizzle-orm-postgres",
+  "version": "1.2.2",
+  "description": "Postgres Drizzle ORM module for Nestjs framework (node.js)",
   "author": "Gaiya M. Obed",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Obedjs/obedjs-cli.git"
+    "url": "https://github.com/gaiyadev/nestjs-drizzleOrm-postgres.git"
   },
   "bugs": {
-    "url": "https://github.com/Obedjs/obedjs-cli/issues"
+    "url": "https://github.com/gaiyadev/nestjs-drizzleOrm-postgres/issues"
   },
-  "homepage": "https://github.com/Obedjs/obedjs-cli/#readme",
+  "homepage": "https://github.com/gaiyadev/nestjs-drizzleOrm-postgres/blob/main/README.md",
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

@@ -1,4 +1,4 @@
 export enum connectionEnum {
-  client = 'client',
-  pool = 'pool',
+  CLIENT = 'client',
+  POOL = 'pool',
 }

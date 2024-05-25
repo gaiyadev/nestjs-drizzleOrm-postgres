@@ -7,7 +7,7 @@ import { connectionEnum } from './enums/connection.enum';
 @Injectable()
 export class DrizzleProvider {
   public async getDrizzle(options: DrizzlePostgresConfig) {
-    if (options.postgres.connection === connectionEnum.client) {
+    if (options.postgres.connection === connectionEnum.CLIENT) {
       const client = new Client(options.postgres.config);
       await client.connect();
       return drizzle(client, options?.config);

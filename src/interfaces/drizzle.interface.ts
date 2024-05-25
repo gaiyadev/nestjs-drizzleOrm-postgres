@@ -4,7 +4,7 @@ import { connectionEnum } from '../enums/connection.enum';
 
 export interface DrizzlePostgresConfig {
   postgres: {
-    connection: connectionEnum.client | connectionEnum.pool;
+    connection: connectionEnum.CLIENT | connectionEnum.POOL;
     config: ClientConfig | PoolConfig;
   };
   config?: DrizzleConfig<any> | undefined;
