@@ -1,17 +1,17 @@
+import { DrizzlePostgresConfig } from './interfaces/drizzle.interface';
 import { Injectable } from '@nestjs/common';
-import postgres from 'postgres';
-import { DrizzleConfigOptions } from './drizzle.interface';
-import { drizzle } from 'drizzle-orm/postgres-js';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Client, Pool } from 'pg';
 
 @Injectable()
-export class DrizzleService {
-  public getDrizzle(options: DrizzleConfigOptions) {
-    try {
-      const client = postgres(options.postgres.url, options.postgres.config);
+export class DrizzlePostgresService {
+  public async getDrizzle(options: DrizzlePostgresConfig) {
+    if (options.postgres.connection === 'client') {
+      const client = new Client(options.postgres.config);
+      await client.connect();
       return drizzle(client, options?.config);
-    } catch (err) {
-      console.error('Error connecting to PostgreSQL:', err);
-      throw err; // Rethrow the error for handling in the calling code
     }
+    const pool = new Pool(options.postgres.config);
+    return drizzle(pool, options?.config);
   }
 }

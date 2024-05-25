@@ -1,35 +1,33 @@
-import { Global, DynamicModule, Module } from '@nestjs/common';
+import { Global, DynamicModule } from '@nestjs/common';
 import {
   ASYNC_OPTIONS_TYPE,
   ConfigurableModuleClass,
   MODULE_OPTIONS_TOKEN,
   OPTIONS_TYPE,
-} from './drizzle.definition';
-import { DrizzleService } from './drizzle.service';
-import { DrizzleConfigOptions } from './drizzle.interface';
+} from './drizzle-metadata/drizzle.definition';
+import { DrizzlePostgresService } from './drizzle.service';
+import { DrizzlePostgresConfig } from './interfaces/drizzle.interface';
 
 @Global()
-// @Module({})
-export class DrizzleModule extends ConfigurableModuleClass {
+export class DrizzlePostgresModule extends ConfigurableModuleClass {
   static forRoot(options: typeof OPTIONS_TYPE): DynamicModule {
     const { providers = [], exports = [], ...props } = super.register(options);
     return {
       ...props,
       providers: [
         ...providers,
-        DrizzleService,
+        DrizzlePostgresService,
         {
           provide: options?.tag || 'default',
-          useFactory: async (drizzleService: DrizzleService) => {
+          useFactory: async (drizzleService: DrizzlePostgresService) => {
             return await drizzleService.getDrizzle(options);
           },
-          inject: [DrizzleService],
+          inject: [DrizzlePostgresService],
         },
       ],
       exports: [...exports, options?.tag || 'default'],
     };
   }
-
   static forRootAsync(options: typeof ASYNC_OPTIONS_TYPE): DynamicModule {
     const {
       providers = [],
@@ -40,33 +38,19 @@ export class DrizzleModule extends ConfigurableModuleClass {
       ...props,
       providers: [
         ...providers,
-        DrizzleService,
+        DrizzlePostgresService,
         {
           provide: options?.tag || 'default',
           useFactory: async (
-            drizzleService: DrizzleService,
-            config: DrizzleConfigOptions,
+            drizzleService: DrizzlePostgresService,
+            config: DrizzlePostgresConfig,
           ) => {
             return await drizzleService.getDrizzle(config);
           },
-          inject: [DrizzleService, MODULE_OPTIONS_TOKEN],
+          inject: [DrizzlePostgresService, MODULE_OPTIONS_TOKEN],
         },
       ],
       exports: [...exports, options?.tag || 'default'],
-    };
-  }
-
-  static forFeature(tables: any[], connection = 'default'): DynamicModule {
-    const providers = tables.map((table) => ({
-      provide: `${connection}_${table.name}Repository`,
-      useFactory: (db) => db.getRepository(table),
-      inject: [connection],
-    }));
-
-    return {
-      module: DrizzleModule,
-      providers,
-      exports: providers,
     };
   }
 }

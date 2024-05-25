@@ -32,6 +32,26 @@
 $ npm i nestjs-drizzle-postgres
 ```
 
+## Usage
+
+```code
+   DrizzlePostgresModule.register({
+      tag: 'DB_DEV',
+      pg: {
+        connection: 'client',
+        config: {
+          connectionString: `postgresql://${process.env['LOCAL_DATABASE_USER']}:${process.env['LOCAL_DATABASE_PASSWORD']}@localhost:5432/drizzle_orm`,
+        },
+      },
+      config: { schema: { ...schema } },
+    }),
+```
+
+Now in the service
+```code
+  constructor(@Inject('DB_DEV') private db: NodePgDatabase<typeof schema>) {}
+
+```
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
