@@ -6,7 +6,7 @@ import {
   OPTIONS_TYPE,
 } from './drizzle-metadata/drizzle.definition';
 import { DrizzleProvider } from './drizzle.provider';
-import { DrizzlePostgresConfig } from './interfaces/drizzle.interface';
+import { IDrizzlePostgresConfig } from './interfaces/drizzle.interface';
 
 @Global()
 @Module({})
@@ -21,7 +21,7 @@ export class DrizzleModule extends ConfigurableModuleClass {
         {
           provide: options?.tag || 'default',
           useFactory: async (drizzleService: DrizzleProvider) => {
-            return await drizzleService.getDrizzle(options);
+            return await drizzleService.setDrizzle(options);
           },
           inject: [DrizzleProvider],
         },
@@ -44,9 +44,9 @@ export class DrizzleModule extends ConfigurableModuleClass {
           provide: options?.tag || 'default',
           useFactory: async (
             drizzleService: DrizzleProvider,
-            config: DrizzlePostgresConfig,
+            config: IDrizzlePostgresConfig,
           ) => {
-            return await drizzleService.getDrizzle(config);
+            return await drizzleService.setDrizzle(config);
           },
           inject: [DrizzleProvider, MODULE_OPTIONS_TOKEN],
         },
