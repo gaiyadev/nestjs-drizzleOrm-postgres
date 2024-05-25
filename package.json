@@ -11,7 +11,8 @@
     "ORM",
     "postgres",
     "pg",
-    "drizzle"
+    "drizzle",
+    "NestJS"
   ],
   "scripts": {
     "prebuild": "rimraf dist",

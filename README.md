@@ -1,6 +1,6 @@
 ## Description
 
-[nestjs-drizzle-orm-postgres](https://github.com/gaiyadev/nestjs-drizzleOrm-postgres) is a postgres drizzle ORM module for NestJs framework (node.js).
+> [nestjs-drizzle-orm-postgres](https://github.com/gaiyadev/nestjs-drizzleOrm-postgres) is a postgres drizzle ORM module for NestJs framework (node.js).
 
 ## Installation
 
@@ -25,7 +25,9 @@ import { schema } from './db/schema';
       },
       config: { schema: { ...schema } },
     }),
+    
     // or
+    
     DrizzleModule.forRootAsync({
       tag: 'DB_DEV',
       postgres: {
