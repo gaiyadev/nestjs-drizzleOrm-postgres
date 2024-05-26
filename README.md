@@ -15,9 +15,9 @@ $ npm i nestjs-drizzle-orm
 Method #1: Pass options object
 
 ```code
-import { DrizzleModule } from 'nestjs-drizzle-orm-postgres';
-import { DialectEnum } from 'nestjs-drizzle-orm-postgres/dist/enums/dist/enums/dialect.enum';
-import { connectionEnum } from 'nestjs-drizzle-orm-postgres/dist/enums/connection.enum';
+import { DrizzleModule } from 'nestjs-drizzle-orm';
+import { DialectEnum } from 'nestjs-drizzle-orm/dist/enums/dist/enums/dialect.enum';
+import { connectionEnum } from 'nestjs-drizzle-orm/dist/enums/connection.enum';
 import { schema } from './db/schema';
 
      DrizzleModule.forRoot({
