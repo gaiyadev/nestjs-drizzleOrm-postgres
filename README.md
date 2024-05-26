@@ -5,12 +5,12 @@
 ## Installation
 
 ```bash
-$ npm i nestjs-drizzle-orm-postgres
+$ npm i nestjs-drizzle-orm
 ```
 
 ## Usage
 
-### Postgres configuration
+### Postgres Configuration
 
 Method #1: Pass options object
 
@@ -78,7 +78,7 @@ export class DBConfigService {
 ```
 
 
-### MYSQL configuration
+### MYSQL Configuration
 
 Method #1: Pass options object
 
@@ -161,7 +161,7 @@ import { schema } from './db/schema';
 
 async getHello(): Promise<any> {
     try {
-      const users = await this.db.query.users.findMany({});
+      const users = await this.db.query.users.findMany();
       return users;
     } catch (error) {
       throw error; // Re-throw the error to propagate it up the call stack
