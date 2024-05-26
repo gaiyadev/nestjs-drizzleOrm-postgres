@@ -1,6 +1,6 @@
 {
   "name": "nestjs-drizzle-orm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Is a NestJS ORM module tailored for Drizzle, supporting PostgreSQL and MySQL dialects. Simplify your database interactions effortlessly.",
   "author": "Gaiya M. Obed",
   "main": "dist/index.js",
