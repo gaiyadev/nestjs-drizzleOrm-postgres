@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-drizzle-orm-postgres",
+  "name": "nestjs-drizzle-orm",
   "version": "1.0.3",
   "description": "Postgres Drizzle ORM module for Nestjs framework (node.js)",
   "author": "Gaiya M. Obed",
@@ -37,6 +37,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "drizzle-orm": "^0.30.10",
+    "mysql2": "^3.9.7",
     "pg": "^8.11.5",
     "postgres": "^3.4.4",
     "reflect-metadata": "^0.1.13",

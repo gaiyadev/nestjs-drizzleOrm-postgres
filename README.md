@@ -1,6 +1,6 @@
 ## Description
 
-> [nestjs-drizzle-orm-postgres](https://github.com/gaiyadev/nestjs-drizzleOrm-postgres) is a postgres drizzle ORM module for NestJs framework (node.js).
+> [nestjs-drizzle-orm](https://github.com/gaiyadev/nestjs-drizzleOrm-postgres) Is a NestJS ORM module tailored for Drizzle, supporting PostgreSQL and MySQL dialects. Simplify your database interactions effortlessly.
 
 ## Installation
 
@@ -10,13 +10,19 @@ $ npm i nestjs-drizzle-orm-postgres
 
 ## Usage
 
+### Postgres configuration
+
+Method #1: Pass options object
+
 ```code
-import { DrizzleModule } from 'nestjs-drizzle-postgres';
-import { connectionEnum } from 'nestjs-drizzle-postgres/dist/enums/connection.enum';
+import { DrizzleModule } from 'nestjs-drizzle-orm-postgres';
+import { DialectEnum } from 'nestjs-drizzle-orm-postgres/dist/enums/dist/enums/dialect.enum';
+import { connectionEnum } from 'nestjs-drizzle-orm-postgres/dist/enums/connection.enum';
 import { schema } from './db/schema';
 
      DrizzleModule.forRoot({
       tag: 'DB_DEV',
+      dialect: DialectEnum.POSTGRES,
       postgres: {
         connection: connectionEnum.CLIENT,
         config: {
@@ -25,19 +31,123 @@ import { schema } from './db/schema';
       },
       config: { schema: { ...schema } },
     }),
-    
-    // or
-    
-    DrizzleModule.forRootAsync({
+```
+
+Method #2: useFactory()
+
+```code    
+ DrizzleModule.forRootAsync({
       tag: 'DB_DEV',
+      useFactory() {
+        return {
+          dialect: DialectEnum.POSTGRES,
+          postgres: {
+            connection: connectionEnum.CLIENT,
+            config: {
+              connectionString: `postgresql://${process.env['LOCAL_DATABASE_USER']}:${process.env['LOCAL_DATABASE_PASSWORD']}@localhost:5432/drizzle_orm`,
+            },
+          },
+          config: { schema: { ...schema } },
+        };
+      },
+    }),
+```
+
+Method #3: useClass()
+
+```code
+ DrizzleModule.forRootAsync({
+      tag: 'DB_DEV',
+      dialect: DialectEnum.POSTGRES,
+      useClass: DBConfigService,
+ }),
+    
+export class DBConfigService {
+  create = () => {
+    return {
       postgres: {
-        connection: connectionEnum.CLIENT,
-        config: {
-          connectionString: `postgresql://${process.env['LOCAL_DATABASE_USER']}:${process.env['LOCAL_DATABASE_PASSWORD']}@localhost:5432/drizzle_orm`,
+      connection: connectionEnum.CLIENT,
+      config: {
+          connectionString: 'postgres://postgres:@127.0.0.1:5432/drizzleDB',
         },
       },
       config: { schema: { ...schema } },
+    };
+  };
+}
+```
+
+
+### MYSQL configuration
+
+Method #1: Pass options object
+
+```code
+DrizzleModule.forRoot({
+      tag: 'DB_DEV',
+      dialect: DialectEnum.MYSQL,
+      mysql: {
+        connection: connectionEnum.CLIENT,
+        config: {
+          password: '',
+          user: 'root',
+          host: '127.0.0.1',
+          database: 'drizzle_orm',
+        },
+      },
+      config: { schema: { ...schema }, mode: 'default' },
     }),
+```
+
+Method #2: useFactory()
+
+```code
+ DrizzleModule.forRootAsync({
+      tag: 'DB_DEV',
+      useFactory() {
+        return {
+          tag: 'DB_DEV',
+          dialect: DialectEnum.MYSQL,
+          mysql: {
+            connection: connectionEnum.CLIENT,
+            config: {
+              password: '',
+              user: 'root',
+              host: '127.0.0.1',
+              database: 'drizzle_orm',
+            },
+          },
+          config: { schema: { ...schema }, mode: 'default' },
+        };
+      },
+    }),
+```
+
+Method #3: useClass()
+
+```code
+ DrizzleModule.forRootAsync({
+      tag: 'DB_DEV',
+      dialect: DialectEnum.MYSQL,
+      useClass: DBConfigService,
+ }),
+    
+export class DBConfigService {
+  create = () => {
+    return {
+      postgres: {
+      connection: connectionEnum.CLIENT,
+      config: {
+          password: '',
+          user: 'root',
+          host: '127.0.0.1',
+         database: 'drizzle_orm',
+        },
+      },
+      config: { schema: { ...schema } },
+    };
+  };
+}
 ```
 
 Now in the service
@@ -54,7 +164,6 @@ async getHello(): Promise<any> {
       const users = await this.db.query.users.findMany({});
       return users;
     } catch (error) {
-      console.error('Error fetching users:', error);
       throw error; // Re-throw the error to propagate it up the call stack
     }
   }
