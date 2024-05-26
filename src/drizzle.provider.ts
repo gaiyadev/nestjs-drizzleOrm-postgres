@@ -1,7 +1,6 @@
 import { IDrizzleConfig } from './interfaces/drizzle.interface';
 import { Injectable } from '@nestjs/common';
 import { Client, Pool } from 'pg';
-// import mysql from 'mysql2/promise';
 import * as mysql from 'mysql2';
 
 import { connectionEnum } from './enums/connection.enum';
