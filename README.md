@@ -153,7 +153,7 @@ export class DBConfigService {
 ## Service implementation
 
 ### Postgres
-
+Step #1: Service 
 ```code
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { schema } from './db/schema';
@@ -170,8 +170,26 @@ async getHello(): Promise<any> {
     }
   }
 ```
+Step #2: Schema
+
+```code
+import { pgTable, serial, text, varchar, timestamp } from 'drizzle-orm/pg-core';
+
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  fullName: text('full_name'),
+});
+
+// Create a schema object to bundle all tables
+export const schema = {
+  users,
+};
+
+```
 
 ### MYSQL
+
+Step #1: Service
 
 ```code
 import { MySql2Database } from 'drizzle-orm/mysql2';
@@ -190,6 +208,22 @@ async getHello(): Promise<any> {
   }
 ```
 
+Step #2: Schema
+
+```code
+import { mysqlTable, serial, text, varchar, timestamp } from 'drizzle-orm/mysql-core';
+
+export const users = mysqlTable('users', {
+  id: serial('id').primaryKey(),
+  fullName: text('full_name'),
+});
+
+// Create a schema object to bundle all tables
+export const schema = {
+  users,
+};
+
+```
 
 ## Support
 
