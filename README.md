@@ -8,7 +8,7 @@
 $ npm i nestjs-drizzle-orm
 ```
 
-## Usage
+## Module Usage
 
 ### Postgres Configuration
 
@@ -171,7 +171,7 @@ async getHello(): Promise<any> {
   }
 ```
 
-### MySQL
+### MYSQL
 
 ```code
 import { MySql2Database } from 'drizzle-orm/mysql2';
@@ -193,10 +193,10 @@ async getHello(): Promise<any> {
 
 ## Support
 
-This project is an MIT-licensed open source project.
-
 ## Stay in touch
 
 
 ## License
+
+This project is an MIT-licensed open source project.
 
