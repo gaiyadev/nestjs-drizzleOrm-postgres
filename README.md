@@ -150,7 +150,9 @@ export class DBConfigService {
 }
 ```
 
-Now in the service
+## Service implementation
+
+### Postgres
 
 ```code
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
@@ -168,6 +170,27 @@ async getHello(): Promise<any> {
     }
   }
 ```
+
+### MySQL
+
+```code
+import { MySql2Database } from 'drizzle-orm/mysql2';
+import { schema } from './db/schema';
+
+constructor(@Inject('DB_DEV') private db: MySql2Database<typeof schema>) {}
+
+
+async getHello(): Promise<any> {
+    try {
+      const users = await this.db.query.users.findMany();
+      return users;
+    } catch (error) {
+      throw error; // Re-throw the error to propagate it up the call stack
+    }
+  }
+```
+
+
 ## Support
 
 This project is an MIT-licensed open source project.
