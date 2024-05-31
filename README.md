@@ -227,6 +227,8 @@ export const schema = {
 
 ## Support
 
+Feel free to leave  star 
+
 ## Stay in touch
 
 
