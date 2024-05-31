@@ -1,7 +1,7 @@
 {
   "name": "nestjs-drizzle-orm",
   "version": "1.0.3",
-  "description": "Is a NestJS ORM module tailored for Drizzle, supporting PostgreSQL and MySQL dialects. Simplify your database interactions effortlessly.",
+  "description": "nestjs-drizzle-orm is a NestJS ORM module tailored for Drizzle, supporting PostgreSQL and MySQL dialects. Simplify your database interactions effortlessly.",
   "author": "Gaiya M. Obed",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,9 @@
     "postgres",
     "pg",
     "drizzle",
-    "NestJS"
+    "NestJS",
+    "Drizzle ORM",
+    "expressjs"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
